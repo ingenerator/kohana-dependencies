@@ -11,8 +11,9 @@ class Kohana_Dependency_Definition_List implements Iterator, Countable, ArrayAcc
 
 	public function add($key, Dependency_Definition $definition)
 	{
-		if ( ! is_string($key))
-			throw new Dependency_Exception('A dependency definition must be identified with a string key.');
+		if ( ! is_string($key)) {
+		    throw Dependency_Exception::invalidDefinitionKey($key);
+        }
 
 		$this->_definitions[$key] = $definition;
 
@@ -21,8 +22,9 @@ class Kohana_Dependency_Definition_List implements Iterator, Countable, ArrayAcc
 
 	public function get($key)
 	{
-		if ( ! is_string($key))
-			throw new Dependency_Exception('Could not find the dependency definition. An invalid key was provided.');
+		if ( ! is_string($key)) {
+		    throw Dependency_Exception::invalidLookupKey($key);
+        }
 
 		// Get all of the relevant definitions
 		$relevant_definitions = array();
@@ -36,8 +38,9 @@ class Kohana_Dependency_Definition_List implements Iterator, Countable, ArrayAcc
 			}
 		}
 
-		if (empty($relevant_definitions))
-			throw new Dependency_Exception('Could not find the dependency definition based on the provided key.');
+		if (empty($relevant_definitions)) {
+		    throw Dependency_Exception::undefinedLookupKey($key);
+        }
 
 		// Merge the relevant definitions into a single definition that will be used to construct the object
 		$definition = array_shift($relevant_definitions);
@@ -53,10 +56,11 @@ class Kohana_Dependency_Definition_List implements Iterator, Countable, ArrayAcc
 	{
 		foreach ($array as $key => $sub_array)
 		{
-			if ( ! is_array($sub_array))
-				throw new Dependency_Exception('Could not load dependency definitions from the array.');
-
 			$full_key = trim($parent_key.'.'.$key, '.');
+
+			if ( ! is_array($sub_array)) {
+			    throw Dependency_Exception::invalidDefinitionSubArray($full_key);
+            }
 
 			if ($settings = Arr::get($sub_array, '_settings'))
 			{

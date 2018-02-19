@@ -81,9 +81,7 @@ class Kohana_Dependency_Container {
 		}
 		catch (ReflectionException $e)
 		{
-			throw new Dependency_Exception('There was a problem instantiating the :class class in the DI_Container.', array(
-				':class' => $definition->class,
-			));
+		    throw Dependency_Exception::dependencyInstantiationException($definition->class, $e);
 		}
 
 		return $instance;
