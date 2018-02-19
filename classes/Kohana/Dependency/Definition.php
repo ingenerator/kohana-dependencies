@@ -54,8 +54,9 @@ class Kohana_Dependency_Definition {
 			list($directory, $file) = explode('/', $path, 2);
 			$file_path = Kohana::find_file($directory, $file);
 
-			if (empty($file_path))
-				throw new Dependency_Exception('Could not construct the dependency definition. An invalid path was provided.');
+			if (empty($file_path)) {
+			    throw Dependency_Exception::emptyFilePath();
+            }
 		}
 
 		$this->_path = $file_path;
