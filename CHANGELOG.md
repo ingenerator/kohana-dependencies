@@ -1,5 +1,7 @@
 ## Unreleased
 
+* Mark that this package replaces zeelot/kohana-dependencies
+
 ## v0.8.0 (2018-02-20)
 
 * Rename package to ingenerator/kohana-dependencies 
