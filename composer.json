@@ -39,5 +39,14 @@
 		"phpspec/phpspec":        "^2.0",
 		"bossa/phpspec2-expect":  "^1.0",
 		"mikey179/vfsStream":     "^1.3"
+	},
+	"replace": {
+		"zeelot/kohana-dependencies": "self.version"
+	},
+	"autoload-dev": {
+		"psr-0": {
+			"Dependency_": "classes/",
+			"Kohana_Dependency_": "classes/"
+		}
 	}
 }

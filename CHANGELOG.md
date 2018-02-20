@@ -1,5 +1,11 @@
 ## Unreleased
 
+## v0.9.0 (2018-02-20)
+
+* Register all classes with composer's autoloader : remove transparent extension support.
+  No longer needs to be referenced as a module
+* Mark that this package replaces zeelot/kohana-dependencies
+
 ## v0.8.0 (2018-02-20)
 
 * Rename package to ingenerator/kohana-dependencies 

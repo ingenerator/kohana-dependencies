@@ -2,7 +2,7 @@
 
 A simple dependency injection container for Kohana 3.3.x
 
-[![Build Status](https://travis-ci.org/ingenerator/kohana-dependencies.svg?branch=0.8.x)](https://travis-ci.org/ingenerator/kohana-dependencies)
+[![Build Status](https://travis-ci.org/ingenerator/kohana-dependencies.svg?branch=0.9.x)](https://travis-ci.org/ingenerator/kohana-dependencies)
 
 
 - **Version**: 0.8
