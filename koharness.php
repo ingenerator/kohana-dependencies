@@ -1,7 +1,4 @@
 <?php
 // Configuration for running module tests with koharness
-return array(
-    'modules' => array(
-        'kohana-dependencies' => __DIR__
-    )
-);
+return [
+];
