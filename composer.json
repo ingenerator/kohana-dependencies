@@ -1,11 +1,17 @@
 {
-	"name":        "zeelot/kohana-dependencies",
+	"name":        "ingenerator/kohana-dependencies",
 	"type":        "library",
 	"description": "A Dependency Injection Container Module for Kohana 3.x",
-	"homepage":    "https://github.com/Zeelot/kohana-dependencies",
+	"homepage":    "https://github.com/ingenerator/kohana-dependencies",
 	"license":     "BSD-3-Clause",
 	"keywords":    ["kohana", "dependencies", "dependency"],
 	"authors": [
+		{
+			"name":     "Andrew Coulton",
+			"email":    "andrew@ingenerator.com",
+			"homepage": "http://www.ingenerator.com",
+			"role":     "developer"
+		},
 		{
 			"name":     "Lorenzo Pisani",
 			"email":    "zeelot3k@gmail.com",
@@ -20,8 +26,8 @@
 		}
 	],
 	"support": {
-		"issues":   "https://github.com/Zeelot/kohana-dependencies/issues",
-		"source":   "https://github.com/Zeelot/kohana-dependencies"
+		"issues":   "https://github.com/ingenerator/kohana-dependencies/issues",
+		"source":   "https://github.com/ingenerator/kohana-dependencies"
 	},
 	"require": {
 		"composer/installers": "~1.0",

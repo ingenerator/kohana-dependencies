@@ -1,5 +1,8 @@
 ## Unreleased
 
+## v0.8.0 (2018-02-20)
+
+* Rename package to ingenerator/kohana-dependencies 
 * Improve the exception messages provided for easier debugging
 * Fix build and drop support for PHP <=5.5
 
