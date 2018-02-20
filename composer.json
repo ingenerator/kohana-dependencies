@@ -43,7 +43,7 @@
 	"replace": {
 		"zeelot/kohana-dependencies": "self.version"
 	},
-	"autoload-dev": {
+	"autoload": {
 		"psr-0": {
 			"Dependency_": "classes/",
 			"Kohana_Dependency_": "classes/"
