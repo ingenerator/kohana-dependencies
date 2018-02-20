@@ -1,5 +1,9 @@
 ## Unreleased
 
+## v0.9.1 (2018-02-20)
+
+* Fix autoloader specification in composer.json
+
 ## v0.9.0 (2018-02-20)
 
 * Register all classes with composer's autoloader : remove transparent extension support.
