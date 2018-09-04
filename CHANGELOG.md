@@ -1,5 +1,9 @@
 ## Unreleased
 
+## 0.9.2 (2018-09-04)
+
+* Adds support for PHP ^7.2
+
 ## v0.9.1 (2018-02-20)
 
 * Fix autoloader specification in composer.json
