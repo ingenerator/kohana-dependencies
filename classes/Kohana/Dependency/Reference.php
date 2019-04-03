@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php \defined('SYSPATH') or die('No direct script access.');
 
 abstract class Kohana_Dependency_Reference {
 
@@ -6,13 +6,13 @@ abstract class Kohana_Dependency_Reference {
 
 	public static function factory($argument)
 	{
-		if (preg_match('/^\%'.self::KEY_FORMAT.'\%$/D', $argument))
+		if (\preg_match('/^\%'.self::KEY_FORMAT.'\%$/D', $argument))
 		{
-			$argument = new Dependency_Reference_Container(trim($argument, '%'));
+			$argument = new Dependency_Reference_Container(\trim($argument, '%'));
 		}
-		elseif (preg_match('/^\@'.self::KEY_FORMAT.'\@$/D', $argument))
+		elseif (\preg_match('/^\@'.self::KEY_FORMAT.'\@$/D', $argument))
 		{
-			$argument = new Dependency_Reference_Config(trim($argument, '@'));
+			$argument = new Dependency_Reference_Config(\trim($argument, '@'));
 		}
 
 		return $argument;

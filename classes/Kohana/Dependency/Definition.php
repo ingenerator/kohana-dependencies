@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php \defined('SYSPATH') or die('No direct script access.');
 
 class Kohana_Dependency_Definition {
 
@@ -18,7 +18,7 @@ class Kohana_Dependency_Definition {
 	{
 		// Remove all unneeded items
 		$allowed_keys = array('class', 'path', 'constructor', 'arguments', 'shared', 'methods');
-		$settings = array_filter(Arr::extract($settings, $allowed_keys));
+		$settings = \array_filter(Arr::extract($settings, $allowed_keys));
 
 		// Loop through and use the class's setter methods
 		foreach ($settings as $key => $value)
@@ -42,16 +42,16 @@ class Kohana_Dependency_Definition {
 	public function set_path($path)
 	{
 		// Make sure the path is a string
-		if ( ! is_string($path))
+		if ( ! \is_string($path))
 		{
 			$path = '';
 		}
 
 		// Make sure the path exists
 		$file_path = NULL;
-		if (strpos($path, '/') !== FALSE)
+		if (\strpos($path, '/') !== FALSE)
 		{
-			list($directory, $file) = explode('/', $path, 2);
+			list($directory, $file) = \explode('/', $path, 2);
 			$file_path = Kohana::find_file($directory, $file);
 
 			if (empty($file_path)) {
@@ -130,7 +130,7 @@ class Kohana_Dependency_Definition {
 	{
 		$left = clone $this;
 		
-		foreach (get_object_vars($this) as $key => $value)
+		foreach (\get_object_vars($this) as $key => $value)
 		{
 			if ( ! empty($right->$key))
 			{
@@ -143,7 +143,7 @@ class Kohana_Dependency_Definition {
 
 	public function __get($property)
 	{
-		if (property_exists($this, '_'.$property))
+		if (\property_exists($this, '_'.$property))
 			return $this->{'_'.$property};
 		else
 			return NULL;
@@ -151,15 +151,15 @@ class Kohana_Dependency_Definition {
 	
 	public function __isset($property)
 	{
-		return (bool) property_exists($this, '_'.$property);
+		return (bool) \property_exists($this, '_'.$property);
 	}
 
 	public function as_array()
 	{
 		$properties = array();
-		foreach(get_object_vars($this) as $key => $value)
+		foreach(\get_object_vars($this) as $key => $value)
 		{
-			$key = ltrim($key, '_');
+			$key = \ltrim($key, '_');
 			$properties[$key] = $value;
 		}
 
@@ -168,7 +168,7 @@ class Kohana_Dependency_Definition {
 
 	protected function _handle_reference($argument)
 	{
-		if ( ! empty($argument) AND is_string($argument) AND in_array($argument[0], array('%', '@')))
+		if ( ! empty($argument) AND \is_string($argument) AND \in_array($argument[0], array('%', '@')))
 		{
 			$argument = Dependency_Reference::factory($argument);
 		}

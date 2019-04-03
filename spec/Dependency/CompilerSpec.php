@@ -41,8 +41,8 @@ class Dependency_CompilerSpec extends ObjectBehavior
 
 	function it_creates_file_at_requested_path()
 	{
-		$file = $this->given_compiled_to_temp_file(uniqid('services'), new \Dependency_Definition_List);
-		expect(file_exists($file))->toBe(TRUE);
+		$file = $this->given_compiled_to_temp_file(\uniqid('services'), new \Dependency_Definition_List);
+		expect(\file_exists($file))->toBe(TRUE);
 	}
 
 	function it_compiles_class_definition_for_requested_class_name()
@@ -53,7 +53,7 @@ class Dependency_CompilerSpec extends ObjectBehavior
     function its_compiled_class_extends_kohana_dependency_container_if_classname_conflicts()
     {
         $file = $this->given_compiled_to_temp_file('SomeClass', new \Dependency_Definition_List);
-        expect(file_get_contents($file))->toMatch('/class SomeClass extends \\\\Dependency_Container/');
+        expect(\file_get_contents($file))->toMatch('/class SomeClass extends \\\\Dependency_Container/');
     }
 
 
@@ -74,8 +74,8 @@ class Dependency_CompilerSpec extends ObjectBehavior
 				))
 		);
 
-		expect(method_exists($class, 'get_date'))->toBe(TRUE);
-		expect(method_exists($class, 'get_array'))->toBe(TRUE);
+		expect(\method_exists($class, 'get_date'))->toBe(TRUE);
+		expect(\method_exists($class, 'get_array'))->toBe(TRUE);
 	}
 
 	function it_adds_getter_with_underscores_for_nested_services()
@@ -88,7 +88,7 @@ class Dependency_CompilerSpec extends ObjectBehavior
 				))
 		);
 
-		expect(method_exists($class, 'get_date_time'))->toBe(TRUE);
+		expect(\method_exists($class, 'get_date_time'))->toBe(TRUE);
 	}
 
 	function its_generated_service_container_can_create_services()
@@ -141,14 +141,14 @@ class Dependency_CompilerSpec extends ObjectBehavior
 
 	function it_alpha_sorts_getters()
 	{
-		$file = $this->given_compiled_to_temp_file(uniqid('services'), \Dependency_Definition_List::factory()
+		$file = $this->given_compiled_to_temp_file(\uniqid('services'), \Dependency_Definition_List::factory()
 				->from_array(array(
 					'date' => array('_settings' => array('class' => '\DateTime')),
 					'array' => array('_settings' => array('class' => '\ArrayObject')),
 				))
 		);
 
-		expect(file_get_contents($file))->toMatch('/get_array.+?get_date/s');
+		expect(\file_get_contents($file))->toMatch('/get_array.+?get_date/s');
 	}
 
 	function it_throws_if_service_returns_unexpected_type()
@@ -214,7 +214,7 @@ class Dependency_CompilerSpec extends ObjectBehavior
 	 */
 	protected function given_compiled_to_unique_class(\Dependency_Definition_List $definitions)
 	{
-		$class = uniqid('services');
+		$class = \uniqid('services');
 		expect($class)->notToBeDefinedClassName();
 		$this->given_compiled_to_temp_file($class, $definitions);
 		expect($class)->toBeDefinedClassName();
@@ -226,7 +226,7 @@ class Dependency_CompilerSpec extends ObjectBehavior
 		$matchers = parent::getMatchers();
 
 		$matchers['beDefinedClassName'] = function ($name) {
-			return class_exists($name, FALSE);
+			return \class_exists($name, FALSE);
 		};
 
 		$matchers['declareMethodReturnType'] = function ($class, $method_name, $expect_type) {
@@ -234,11 +234,11 @@ class Dependency_CompilerSpec extends ObjectBehavior
 			$method     = $reflection->getMethod($method_name);
 			$comment    = $method->getDocComment();
 
-			if ( ! preg_match('/^\s+\* @return (.+?)$/m', $comment, $matches)) {
+			if ( ! \preg_match('/^\s+\* @return (.+?)$/m', $comment, $matches)) {
 				throw new FailureException("Expected $method_name doc comment to define @return tag but it does not: " . $comment);
 			}
 			if ($expect_type !== $matches[1]) {
-				var_dump($matches[1]);
+				\var_dump($matches[1]);
 				throw new FailureException("Expected $method_name @return of " . $expect_type . ", got " . $matches[1]);
 			}
 			return TRUE;
