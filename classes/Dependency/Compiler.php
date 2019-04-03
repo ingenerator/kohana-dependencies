@@ -96,7 +96,7 @@ PHP;
 	protected function build_getter($service_name, Dependency_Definition $definition)
 	{
 		$this->getters[$service_name] = array(
-			':method_name' => 'get_' . str_replace('.', '_', $service_name),
+			':method_name' => 'get_' . \str_replace('.', '_', $service_name),
 			':service_key' => $service_name,
 			':return_type' => $this->find_service_type($definition)
 		);
@@ -115,7 +115,7 @@ PHP;
 		$reflection = new \ReflectionClass($definition->class);
 		$documentation = $reflection->getMethod($definition->constructor)->getDocComment();
 
-		if (preg_match('/\s+\* @return\s+([^\s]+)/', $documentation, $matches)) {
+		if (\preg_match('/\s+\* @return\s+([^\s]+)/', $documentation, $matches)) {
 			return $matches[1];
 		}
 
@@ -129,12 +129,12 @@ PHP;
 	protected function write_class_definition()
 	{
         $content = $this->build_class_header();
-        ksort($this->getters);
+        \ksort($this->getters);
 		foreach ($this->getters as $getter) {
-			$content .= strtr(self::GETTER_METHOD, $getter);
+			$content .= \strtr(self::GETTER_METHOD, $getter);
 		}
 		$content .= self::CLASS_FOOTER;
-		file_put_contents($this->filename, $content);
+		\file_put_contents($this->filename, $content);
 	}
 
     /**
@@ -149,7 +149,7 @@ PHP;
             $params[':parent_class_name'] = '\Dependency_Container';
         }
 
-        return strtr(self::CLASS_HEADER, $params);
+        return \strtr(self::CLASS_HEADER, $params);
     }
 
     /**
@@ -162,25 +162,25 @@ PHP;
 		$errors = array();
 		foreach ($this->getters as $getter) {
 			try {
-				$service = call_user_func(array($container, $getter[':method_name']));
+				$service = \call_user_func(array($container, $getter[':method_name']));
 				if ( ! $this->is_expected_service_type($service, $getter[':return_type'])) {
-					$errors[] = sprintf(
+					$errors[] = \sprintf(
 						'%s: expected %s, got instance of %s',
 						$getter[':service_key'],
 						$getter[':return_type'],
-						get_class($service)
+						\get_class($service)
 					);
 				}
 			} catch (\Dependency_Exception $e) {
-				$errors[] = sprintf('%s: ' . $e->getMessage(), $getter[':service_key']);
+				$errors[] = \sprintf('%s: ' . $e->getMessage(), $getter[':service_key']);
 			} catch (\ReflectionException $e) {
 				// Usually an undefined class exception
-				$errors[] = sprintf('%s: ' . $e->getMessage(), $getter[':service_key']);
+				$errors[] = \sprintf('%s: ' . $e->getMessage(), $getter[':service_key']);
 			}
 		}
 
 		if ($errors) {
-			throw new \InvalidArgumentException("Your service container configuration is not valid:" . PHP_EOL . ' - ' . implode(PHP_EOL . ' - ', $errors));
+			throw new \InvalidArgumentException("Your service container configuration is not valid:" . PHP_EOL . ' - ' . \implode(PHP_EOL . ' - ', $errors));
 		}
 	}
 

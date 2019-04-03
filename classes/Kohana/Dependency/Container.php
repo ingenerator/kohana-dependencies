@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php \defined('SYSPATH') or die('No direct script access.');
 
 class Kohana_Dependency_Container {
 
@@ -35,7 +35,7 @@ class Kohana_Dependency_Container {
 	protected function _cache($key, $instance = NULL)
 	{
 		// Setter
-		if (is_object($instance))
+		if (\is_object($instance))
 		{
 			$this->_cache[$key] = $instance;
 			return;
@@ -51,14 +51,14 @@ class Kohana_Dependency_Container {
 	protected function _get_instance(Dependency_Definition $definition)
 	{
 		// Make sure the class exists
-		if ( ! class_exists($definition->class) AND ! empty($definition->path))
+		if ( ! \class_exists($definition->class) AND ! empty($definition->path))
 		{
 			include_once $definition->path;
 		}
 
 		// Reflect the class and prepare the arguments
 		$class     = new ReflectionClass($definition->class);
-		$arguments = array_map(array($this, '_resolve_argument'), $definition->arguments);
+		$arguments = \array_map(array($this, '_resolve_argument'), $definition->arguments);
 
 		try
 		{
@@ -75,8 +75,8 @@ class Kohana_Dependency_Container {
 			// Run any additional methods required to prepare the object
 			foreach ($definition->methods as $method => $args)
 			{
-				$args = array_map(array($this, '_resolve_argument'), $args);
-				call_user_func_array(array($instance, $method), $args);
+				$args = \array_map(array($this, '_resolve_argument'), $args);
+				\call_user_func_array(array($instance, $method), $args);
 			}
 		}
 		catch (ReflectionException $e)

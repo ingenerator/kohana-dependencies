@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php \defined('SYSPATH') or die('No direct script access.');
 
 class Kohana_Dependency_Exception extends Kohana_Exception
 {
@@ -21,7 +21,7 @@ class Kohana_Dependency_Exception extends Kohana_Exception
     {
         return new static(
             'A dependency definition must be identified with a string key - got :type', [
-                ':type' => is_object($key) ? get_class($key) : gettype($key),
+                ':type' => \is_object($key) ? \get_class($key) : \gettype($key),
             ]
         );
     }
@@ -39,7 +39,7 @@ class Kohana_Dependency_Exception extends Kohana_Exception
         return new static(
             'An invalid dependency key was provided : expected string, got :type',
             [
-                ':type' => is_object($key) ? get_class($key) : gettype($key),
+                ':type' => \is_object($key) ? \get_class($key) : \gettype($key),
             ]
         );
     }

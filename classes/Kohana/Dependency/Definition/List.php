@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php \defined('SYSPATH') or die('No direct script access.');
 
 class Kohana_Dependency_Definition_List implements Iterator, Countable, ArrayAccess {
 
@@ -11,7 +11,7 @@ class Kohana_Dependency_Definition_List implements Iterator, Countable, ArrayAcc
 
 	public function add($key, Dependency_Definition $definition)
 	{
-		if ( ! is_string($key)) {
+		if ( ! \is_string($key)) {
 		    throw Dependency_Exception::invalidDefinitionKey($key);
         }
 
@@ -22,16 +22,16 @@ class Kohana_Dependency_Definition_List implements Iterator, Countable, ArrayAcc
 
 	public function get($key)
 	{
-		if ( ! is_string($key)) {
+		if ( ! \is_string($key)) {
 		    throw Dependency_Exception::invalidLookupKey($key);
         }
 
 		// Get all of the relevant definitions
 		$relevant_definitions = array();
 		$current_path = '';
-		foreach (explode('.', $key) as $sub_key)
+		foreach (\explode('.', $key) as $sub_key)
 		{
-			$current_path = trim($current_path.'.'.$sub_key, '.');
+			$current_path = \trim($current_path.'.'.$sub_key, '.');
 			if ($definition = Arr::path($this->_definitions, $current_path))
 			{
 				$relevant_definitions[] = $definition;
@@ -43,7 +43,7 @@ class Kohana_Dependency_Definition_List implements Iterator, Countable, ArrayAcc
         }
 
 		// Merge the relevant definitions into a single definition that will be used to construct the object
-		$definition = array_shift($relevant_definitions);
+		$definition = \array_shift($relevant_definitions);
 		foreach ($relevant_definitions as $relevant_definition)
 		{
 			$definition = $definition->merge_with($relevant_definition);
@@ -56,9 +56,9 @@ class Kohana_Dependency_Definition_List implements Iterator, Countable, ArrayAcc
 	{
 		foreach ($array as $key => $sub_array)
 		{
-			$full_key = trim($parent_key.'.'.$key, '.');
+			$full_key = \trim($parent_key.'.'.$key, '.');
 
-			if ( ! is_array($sub_array)) {
+			if ( ! \is_array($sub_array)) {
 			    throw Dependency_Exception::invalidDefinitionSubArray($full_key);
             }
 
@@ -89,32 +89,32 @@ class Kohana_Dependency_Definition_List implements Iterator, Countable, ArrayAcc
 
 	public function count()
 	{
-		return count($this->_definitions);
+		return \count($this->_definitions);
 	}
 
 	public function current()
 	{
-		return current($this->_definitions);
+		return \current($this->_definitions);
 	}
 
 	public function key()
 	{
-		return key($this->_definitions);
+		return \key($this->_definitions);
 	}
 
 	public function next()
 	{
-		next($this->_definitions);
+		\next($this->_definitions);
 	}
 
 	public function rewind()
 	{
-		reset($this->_definitions);
+		\reset($this->_definitions);
 	}
 
 	public function valid()
 	{
-		return (current($this->_definitions) !== FALSE);
+		return (\current($this->_definitions) !== FALSE);
 	}
 
 	public function offsetExists($key)

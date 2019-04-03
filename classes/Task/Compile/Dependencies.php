@@ -70,15 +70,15 @@ class Task_Compile_Dependencies extends Minion_Task {
 	 */
 	public function _valid_path($path)
 	{
-		if (file_exists($path)) {
-			return is_writable($path);
+		if (\file_exists($path)) {
+			return \is_writable($path);
 		}
 
-		$dir = dirname($path);
-		if ( ! is_dir($dir)) {
-			mkdir($dir, 0755, TRUE);
+		$dir = \dirname($path);
+		if ( ! \is_dir($dir)) {
+			\mkdir($dir, 0755, TRUE);
 		}
-		return is_writable($dir);
+		return \is_writable($dir);
 	}
 
 }
