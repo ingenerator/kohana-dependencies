@@ -1,5 +1,9 @@
 ## Unreleased
 
+## 1.1.0 (2020-11-02)
+
+* Support php 7.4
+
 ## 1.0.0 (2019-04-03)
 
 * Drop support for php5
