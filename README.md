@@ -72,7 +72,8 @@ Here's a sample config file:
 			'_settings' => array(
 				'class'       => 'Session',
 				'constructor' => 'instance',
-				'arguments'   => array('@session.driver@'),
+                // The @! !@ marks that this config value MUST have a non-null value  
+				'arguments'   => array('@!session.driver!@'),
 				'shared'      => TRUE,
 			),
 		),
