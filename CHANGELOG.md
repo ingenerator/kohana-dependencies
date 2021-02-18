@@ -1,5 +1,7 @@
 ## Unreleased
 
+## 1.2.0 (2021-02-18)
+
 * Add support for required (defined & not null) config references in a dependency definition
 
 ## 1.1.0 (2020-11-02)
