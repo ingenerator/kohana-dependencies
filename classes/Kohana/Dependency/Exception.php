@@ -51,4 +51,12 @@ class Kohana_Dependency_Exception extends Kohana_Exception
             [':key' => $key]
         );
     }
+
+    public static function missingConfig($key)
+    {
+        return new static(
+            'The config variable :key is not defined',
+            [':key' => $key]
+        );
+    }
 }

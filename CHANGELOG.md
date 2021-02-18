@@ -1,5 +1,7 @@
 ## Unreleased
 
+* Add support for required (defined & not null) config references in a dependency definition
+
 ## 1.1.0 (2020-11-02)
 
 * Support php 7.4

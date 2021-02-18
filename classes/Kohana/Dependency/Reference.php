@@ -12,7 +12,11 @@ abstract class Kohana_Dependency_Reference {
 		}
 		elseif (\preg_match('/^\@'.self::KEY_FORMAT.'\@$/D', $argument))
 		{
-			$argument = new Dependency_Reference_Config(\trim($argument, '@'));
+			$argument = new Dependency_Reference_Config(\trim($argument, '@'), FALSE);
+		}
+		elseif (\preg_match('/^\@!'.self::KEY_FORMAT.'\!@$/D', $argument))
+		{
+			$argument = new Dependency_Reference_Config(\trim($argument, '@!'), TRUE);
 		}
 
 		return $argument;

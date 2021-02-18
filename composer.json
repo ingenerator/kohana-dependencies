@@ -36,9 +36,8 @@
 	},
 	"require-dev": {
 		"kohana/koharness":       "dev-master",
-		"phpspec/phpspec":        "^6.1",
-		"bossa/phpspec2-expect":  "^3.1",
-		"mikey179/vfsstream":     "^1.6.8"
+		"mikey179/vfsstream":     "^1.6.8",
+		"phpunit/phpunit": "^9.5"
 	},
 	"repositories": [
 		{

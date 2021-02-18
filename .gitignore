@@ -2,3 +2,4 @@
 /koharness_bootstrap.php
 /vendor
 /.idea
+.phpunit.result.cache
