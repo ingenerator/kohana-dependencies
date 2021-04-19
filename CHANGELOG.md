@@ -1,5 +1,10 @@
 ## Unreleased
 
+## 1.2.1 (2021-04-19)
+
+* Support PHP8
+* Replace use of magic getters in dependency Definition
+
 ## 1.2.0 (2021-02-18)
 
 * Add support for required (defined & not null) config references in a dependency definition
