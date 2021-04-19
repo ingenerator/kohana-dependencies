@@ -51,29 +51,29 @@ class Kohana_Dependency_Container {
 	protected function _get_instance(Dependency_Definition $definition)
 	{
 		// Make sure the class exists
-		if ( ! \class_exists($definition->class) AND ! empty($definition->path))
+		if ( ! \class_exists($definition->getClass()) AND ! empty($definition->getPath()))
 		{
-			include_once $definition->path;
+			include_once $definition->getPath();
 		}
 
 		// Reflect the class and prepare the arguments
-		$class     = new ReflectionClass($definition->class);
-		$arguments = \array_map(array($this, '_resolve_argument'), $definition->arguments);
+		$class     = new ReflectionClass($definition->getClass());
+		$arguments = \array_map(array($this, '_resolve_argument'), $definition->getArguments());
 
 		try
 		{
 			// Get an instance of the class
-			if (empty($definition->constructor))
+			if (empty($definition->getConstructor()))
 			{
 				$instance = $class->newInstanceArgs($arguments);
 			}
 			else
 			{
-				$instance = $class->getMethod($definition->constructor)->invokeArgs(NULL, $arguments);
+				$instance = $class->getMethod($definition->getConstructor())->invokeArgs(NULL, $arguments);
 			}
 
 			// Run any additional methods required to prepare the object
-			foreach ($definition->methods as $method => $args)
+			foreach ($definition->getMethods() as $method => $args)
 			{
 				$args = \array_map(array($this, '_resolve_argument'), $args);
 				\call_user_func_array(array($instance, $method), $args);
@@ -81,7 +81,7 @@ class Kohana_Dependency_Container {
 		}
 		catch (ReflectionException $e)
 		{
-		    throw Dependency_Exception::dependencyInstantiationException($definition->class, $e);
+		    throw Dependency_Exception::dependencyInstantiationException($definition->getClass(), $e);
 		}
 
 		return $instance;
