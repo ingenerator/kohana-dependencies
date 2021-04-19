@@ -14,6 +14,37 @@ class Kohana_Dependency_Definition {
 	protected $_shared      = FALSE;
 	protected $_methods     = array();
 
+    public function getClass()
+    {
+        return $this->_class;
+    }
+
+    public function getPath()
+    {
+        return $this->_path;
+    }
+
+    public function getConstructor()
+    {
+        return $this->_constructor;
+    }
+
+    /**
+     * @return array
+     */
+    public function getArguments(): array
+    {
+        return $this->_arguments;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMethods(): array
+    {
+        return $this->_methods;
+    }
+
 	public function from_array(array $settings)
 	{
 		// Remove all unneeded items
@@ -51,7 +82,7 @@ class Kohana_Dependency_Definition {
 		$file_path = NULL;
 		if (\strpos($path, '/') !== FALSE)
 		{
-			list($directory, $file) = \explode('/', $path, 2);
+			[$directory, $file] = \explode('/', $path, 2);
 			$file_path = Kohana::find_file($directory, $file);
 
 			if (empty($file_path)) {
@@ -141,14 +172,26 @@ class Kohana_Dependency_Definition {
 		return $left;
 	}
 
-	public function __get($property)
+    /**
+     * @deprecated
+     * @param $property
+     *
+     * @return null
+     */
+    public function __get($property)
 	{
 		if (\property_exists($this, '_'.$property))
 			return $this->{'_'.$property};
 		else
 			return NULL;
 	}
-	
+
+    /**
+     * @deprecated
+     * @param $property
+     *
+     * @return bool
+     */
 	public function __isset($property)
 	{
 		return (bool) \property_exists($this, '_'.$property);

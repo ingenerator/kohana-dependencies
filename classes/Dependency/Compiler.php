@@ -108,12 +108,12 @@ PHP;
 	 */
 	protected function find_service_type(Dependency_Definition $definition)
 	{
-		if ( ! $definition->constructor) {
-			return $definition->class;
+		if ( ! $definition->getConstructor()) {
+			return $definition->getClass();
 		}
 
-		$reflection = new \ReflectionClass($definition->class);
-		$documentation = $reflection->getMethod($definition->constructor)->getDocComment();
+		$reflection = new \ReflectionClass($definition->getClass());
+		$documentation = $reflection->getMethod($definition->getConstructor())->getDocComment();
 
 		if (\preg_match('/\s+\* @return\s+([^\s]+)/', $documentation, $matches)) {
 			return $matches[1];
