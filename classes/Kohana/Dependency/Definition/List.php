@@ -2,15 +2,15 @@
 
 class Kohana_Dependency_Definition_List implements Iterator, Countable, ArrayAccess {
 
-	public static function factory()
-	{
+	public static function factory(): Dependency_Definition_List
+    {
 		return new Dependency_Definition_List;
 	}
 
-	protected $_definitions = array();
+	protected array $_definitions = array();
 
-	public function add($key, Dependency_Definition $definition)
-	{
+	public function add($key, Dependency_Definition $definition): static
+    {
 		if ( ! \is_string($key)) {
 		    throw Dependency_Exception::invalidDefinitionKey($key);
         }
@@ -52,8 +52,8 @@ class Kohana_Dependency_Definition_List implements Iterator, Countable, ArrayAcc
 		return $definition;
 	}
 
-	public function from_array(array $array, $parent_key = '')
-	{
+	public function from_array(array $array, $parent_key = ''): static
+    {
 		foreach ($array as $key => $sub_array)
 		{
 			$full_key = \trim($parent_key.'.'.$key, '.');
@@ -82,59 +82,59 @@ class Kohana_Dependency_Definition_List implements Iterator, Countable, ArrayAcc
 		return $this;
 	}
 
-	public function as_array()
-	{
+	public function as_array(): array
+    {
 		return $this->_definitions;
 	}
 
-	public function count()
+	public function count(): int
 	{
 		return \count($this->_definitions);
 	}
 
-	public function current()
+	public function current(): mixed
 	{
 		return \current($this->_definitions);
 	}
 
-	public function key()
+	public function key(): mixed
 	{
 		return \key($this->_definitions);
 	}
 
-	public function next()
+	public function next(): void
 	{
 		\next($this->_definitions);
 	}
 
-	public function rewind()
+	public function rewind(): void
 	{
 		\reset($this->_definitions);
 	}
 
-	public function valid()
+	public function valid(): bool
 	{
 		return (\current($this->_definitions) !== FALSE);
 	}
 
-	public function offsetExists($key)
+	public function offsetExists($offset): bool
 	{
-		return isset($this->_definitions[$key]);
+		return isset($this->_definitions[$offset]);
 	}
 
-	public function offsetGet($key)
+	public function offsetGet($offset): mixed
 	{
-		return $this->get($key);
+		return $this->get($offset);
 	}
 
-	public function offsetSet($key, $value)
+	public function offsetSet($offset, $value): void
 	{
-		return $this->add($key, $value);
+		$this->add($offset, $value);
 	}
 
-	public function offsetUnset($key)
+	public function offsetUnset($offset): void
 	{
-		unset($this->_definitions[$key]);
+		unset($this->_definitions[$offset]);
 	}
 
 }

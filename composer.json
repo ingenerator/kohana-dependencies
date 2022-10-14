@@ -31,13 +31,13 @@
 	},
 	"require": {
 		"composer/installers":     "~1.0",
-		"php":                     "^7.4 || ~8.0.0",
+		"php":                     "~8.0.0 || ~8.1.0 || ~8.2.0",
 		"ingenerator/kohana-core": "^4.7"
 	},
 	"require-dev": {
 		"kohana/koharness":       "dev-master",
 		"mikey179/vfsstream":     "^1.6.8",
-		"phpunit/phpunit": "^9.5"
+		"phpunit/phpunit": 		  "^9.5.5"
 	},
 	"repositories": [
 		{
@@ -52,6 +52,11 @@
 		"psr-0": {
 			"Dependency_": "classes/",
 			"Kohana_Dependency_": "classes/"
+		}
+	},
+	"config": {
+		"allow-plugins": {
+			"composer/installers": true
 		}
 	}
 }
