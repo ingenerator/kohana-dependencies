@@ -5,7 +5,7 @@
  * @licence   BSD
  */
 
-namespace test\unit\Ingenerator\KohanaDependencies;
+namespace test\unit\Ingenerator\KohanaDependencies\Dependency;
 
 use ArrayObject;
 use DateTime;
@@ -26,7 +26,7 @@ use function var_dump;
  *
  * @see \Dependency_Compiler
  */
-class Dependency_CompilerTest extends TestCase
+class CompilerTest extends TestCase
 {
 
     function setUp(): void
