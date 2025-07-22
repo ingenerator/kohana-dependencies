@@ -19,9 +19,3 @@ Kohana_Exception::$error_view = 'text-error';
 require_once __DIR__.'/../vendor/kohana/koharness/helper_classes/Session/Fake.php';
 \Session::$default           = 'fake';
 \Session::$instances['fake'] = new Session_Fake;
-
-// Autoload mocks and test-support helpers that should not autoload in the main app
-$mock_loader = new \Composer\Autoload\ClassLoader;
-$mock_loader->addPsr4('test\\mock\\Ingenerator\\KohanaDependencies\\', [__DIR__.'/mock/']);
-$mock_loader->addPsr4('test\\unit\\Ingenerator\\KohanaDependencies\\', [__DIR__.'/unit/']);
-$mock_loader->register();

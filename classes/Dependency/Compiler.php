@@ -65,7 +65,7 @@ PHP;
 	 *
 	 * @return void
 	 */
-	public function compile($class_name, $filename, \Dependency_Definition_List $definitions = NULL)
+	public function compile($class_name, $filename, ?\Dependency_Definition_List $definitions = NULL)
 	{
 		$this->definitions = $definitions;
 		$this->class_name = $class_name;

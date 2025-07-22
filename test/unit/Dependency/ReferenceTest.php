@@ -1,12 +1,12 @@
 <?php
 
 
-namespace test\unit\Ingenerator\KohanaDependencies;
+namespace test\unit\Ingenerator\KohanaDependencies\Dependency;
 
 
 use PHPUnit\Framework\TestCase;
 
-class Dependency_ReferenceTest extends TestCase
+class ReferenceTest extends TestCase
 {
     public function test_its_factory_returns_raw_arg_if_unexpected_format()
     {
