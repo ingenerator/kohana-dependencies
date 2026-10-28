@@ -37,7 +37,8 @@
 	"require-dev": {
 		"ext-mbstring": "*",
 		"mikey179/vfsstream":     "^1.6.8",
-		"phpunit/phpunit": 		  "^11.5"
+		"phpunit/phpunit": 		  "^11.5",
+		"cweagans/composer-patches": "~2.0"
 	},
 	"repositories": [
 		{
@@ -61,7 +62,8 @@
 	},
 	"config": {
 		"allow-plugins": {
-			"composer/installers": true
+			"composer/installers": true,
+			"cweagans/composer-patches": true
 		}
 	}
 }
