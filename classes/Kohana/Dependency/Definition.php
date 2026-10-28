@@ -160,13 +160,35 @@ class Kohana_Dependency_Definition {
 	public function merge_with(Dependency_Definition $right)
 	{
 		$left = clone $this;
-		
-		foreach (\get_object_vars($this) as $key => $value)
+
+		if ( ! empty($right->_class))
 		{
-			if ( ! empty($right->$key))
-			{
-				$left->$key = $right->$key;
-			}
+			$left->_class = $right->_class;
+		}
+
+		if ( ! empty($right->_path))
+		{
+			$left->_path = $right->_path;
+		}
+
+		if ( ! empty($right->_constructor))
+		{
+			$left->_constructor = $right->_constructor;
+		}
+
+		if ( ! empty($right->_arguments))
+		{
+			$left->_arguments = $right->_arguments;
+		}
+
+		if ( ! empty($right->_shared))
+		{
+			$left->_shared = $right->_shared;
+		}
+
+		if ( ! empty($right->_methods))
+		{
+			$left->_methods = $right->_methods;
 		}
 
 		return $left;
