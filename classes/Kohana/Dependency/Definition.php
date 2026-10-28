@@ -47,18 +47,12 @@ class Kohana_Dependency_Definition {
 
 	public function from_array(array $settings)
 	{
-		// Remove all unneeded items
-		$allowed_keys = array('class', 'path', 'constructor', 'arguments', 'shared', 'methods');
-		$settings = \array_filter(Arr::extract($settings, $allowed_keys));
-
-		// Loop through and use the class's setter methods
-		foreach ($settings as $key => $value)
-		{
-			// Decide which setter method to use
-			$set = 'set_'.$key;
-
-			$this->$set($value);
-		}
+		if (isset($settings['class']))       $this->set_class($settings['class']);
+		if (isset($settings['path']))        $this->set_path($settings['path']);
+		if (isset($settings['constructor'])) $this->set_constructor($settings['constructor']);
+		if (isset($settings['arguments']))   $this->set_arguments((array) $settings['arguments']);
+		if (isset($settings['shared']))      $this->set_shared($settings['shared']);
+		if (isset($settings['methods']))     $this->set_methods((array) $settings['methods']);
 
 		return $this;
 	}
@@ -125,9 +119,10 @@ class Kohana_Dependency_Definition {
 		$this->_methods = array();
 		foreach ($methods as $method)
 		{
-			$method_name = Arr::get($method, 0);
-			$arguments   = Arr::get($method, 1, array());
-			$this->add_method($method_name, $arguments);
+			if (isset($method[0]))
+			{
+				$this->add_method($method[0], $method[1] ?? array());
+			}
 		}
 
 		return $this;
