@@ -8,6 +8,7 @@ class Kohana_Dependency_Definition_List implements Iterator, Countable, ArrayAcc
 	}
 
 	protected array $_definitions = array();
+	protected array $_resolved    = array();
 
 	public function add($key, Dependency_Definition $definition): static
     {
@@ -16,6 +17,7 @@ class Kohana_Dependency_Definition_List implements Iterator, Countable, ArrayAcc
         }
 
 		$this->_definitions[$key] = $definition;
+		$this->_resolved          = array();
 
 		return $this;
 	}
@@ -26,15 +28,20 @@ class Kohana_Dependency_Definition_List implements Iterator, Countable, ArrayAcc
 		    throw Dependency_Exception::invalidLookupKey($key);
         }
 
+		if (isset($this->_resolved[$key]))
+		{
+			return $this->_resolved[$key];
+		}
+
 		// Get all of the relevant definitions
 		$relevant_definitions = array();
 		$current_path = '';
 		foreach (\explode('.', $key) as $sub_key)
 		{
 			$current_path = \trim($current_path.'.'.$sub_key, '.');
-			if ($definition = Arr::path($this->_definitions, $current_path))
+			if (isset($this->_definitions[$current_path]))
 			{
-				$relevant_definitions[] = $definition;
+				$relevant_definitions[] = $this->_definitions[$current_path];
 			}
 		}
 
@@ -48,6 +55,8 @@ class Kohana_Dependency_Definition_List implements Iterator, Countable, ArrayAcc
 		{
 			$definition = $definition->merge_with($relevant_definition);
 		}
+
+		$this->_resolved[$key] = $definition;
 
 		return $definition;
 	}
@@ -135,6 +144,7 @@ class Kohana_Dependency_Definition_List implements Iterator, Countable, ArrayAcc
 	public function offsetUnset($offset): void
 	{
 		unset($this->_definitions[$offset]);
+		$this->_resolved = array();
 	}
 
 }
