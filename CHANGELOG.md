@@ -1,5 +1,8 @@
 ## Unreleased
 
+* Support PHP 8.5 & PHP 8.6
+* Drop support for PHP 8.2 & PHP 8.3
+
 ## 1.5.1 (2025-07-25)
 
 * Add support for v2.x of composer/installers

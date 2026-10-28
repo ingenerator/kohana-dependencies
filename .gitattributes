@@ -32,5 +32,3 @@ README  text eol=lf
 /.github export-ignore
 /test export-ignore
 phpunit.xml export-ignore
-koharness.php export-ignore
-
