@@ -14,8 +14,10 @@ class Kohana_Dependency_Container {
 	public function get($key)
 	{
 		// Get an instance from the cache if it's there
-		if ($instance = $this->_cache($key))
-			return $instance;
+		if (isset($this->_cache[$key]))
+		{
+			return $this->_cache[$key];
+		}
 
 		// Get the dependency definition from the definition list
 		$definition = $this->_definitions->get($key);
@@ -26,7 +28,7 @@ class Kohana_Dependency_Container {
 		// Cache the instance if it is shared
 		if ($definition->is_shared())
 		{
-			$this->_cache($key, $instance);
+			$this->_cache[$key] = $instance;
 		}
 
 		return $instance;
