@@ -211,7 +211,7 @@ class Kohana_Dependency_Definition {
 
 	protected function _handle_reference($argument)
 	{
-		if ( ! empty($argument) AND \is_string($argument) AND \in_array($argument[0], array('%', '@')))
+		if ( ! empty($argument) && \is_string($argument) && ($argument[0] === '%' || $argument[0] === '@'))
 		{
 			$argument = Dependency_Reference::factory($argument);
 		}
