@@ -96,7 +96,6 @@ class ReferenceTest extends TestCase
         return $this->getMockBuilder($class)
                     ->disableOriginalConstructor()
                     ->disableOriginalClone()
-                    ->disableProxyingToOriginalMethods()
                     ->getMock();
     }
 
