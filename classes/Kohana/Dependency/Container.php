@@ -56,32 +56,41 @@ class Kohana_Dependency_Container {
 			include_once $definition->getPath();
 		}
 
-		// Reflect the class and prepare the arguments
-		$class     = new ReflectionClass($definition->getClass());
+		$className = $definition->getClass();
 		$arguments = \array_map(array($this, '_resolve_argument'), $definition->getArguments());
 
 		try
 		{
+			if ( ! \class_exists($className))
+			{
+				throw new ReflectionException("Class \"$className\" does not exist");
+			}
+
 			// Get an instance of the class
 			if (empty($definition->getConstructor()))
 			{
-				$instance = $class->newInstanceArgs($arguments);
+				$instance = new $className(...$arguments);
 			}
 			else
 			{
-				$instance = $class->getMethod($definition->getConstructor())->invokeArgs(NULL, $arguments);
+				$constructor = $definition->getConstructor();
+				$instance    = $className::$constructor(...$arguments);
 			}
 
 			// Run any additional methods required to prepare the object
 			foreach ($definition->getMethods() as $method => $args)
 			{
 				$args = \array_map(array($this, '_resolve_argument'), $args);
-				\call_user_func_array(array($instance, $method), $args);
+				$instance->$method(...$args);
 			}
 		}
 		catch (ReflectionException $e)
 		{
 		    throw Dependency_Exception::dependencyInstantiationException($definition->getClass(), $e);
+		}
+		catch (\Error $e)
+		{
+		    throw Dependency_Exception::dependencyInstantiationException($definition->getClass(), new ReflectionException($e->getMessage(), 0, $e));
 		}
 
 		return $instance;
