@@ -31,13 +31,13 @@
 	},
 	"require": {
 		"composer/installers":     "^1.12 || ^2.0",
-		"php":                     "~8.2.0 || ~8.3.0 || ~8.4.0",
-		"ingenerator/kohana-core": "^4.7"
+		"php":                     "~8.4.0 || ~8.5.0 || ~8.6.0",
+		"ingenerator/kohana-core": "dev-support-85"
 	},
 	"require-dev": {
-		"kohana/koharness":       "dev-master",
+		"ext-mbstring": "*",
 		"mikey179/vfsstream":     "^1.6.8",
-		"phpunit/phpunit": 		  "^9.5.5"
+		"phpunit/phpunit": 		  "^11.5"
 	},
 	"repositories": [
 		{
