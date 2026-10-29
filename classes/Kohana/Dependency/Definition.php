@@ -47,18 +47,12 @@ class Kohana_Dependency_Definition {
 
 	public function from_array(array $settings)
 	{
-		// Remove all unneeded items
-		$allowed_keys = array('class', 'path', 'constructor', 'arguments', 'shared', 'methods');
-		$settings = \array_filter(Arr::extract($settings, $allowed_keys));
-
-		// Loop through and use the class's setter methods
-		foreach ($settings as $key => $value)
-		{
-			// Decide which setter method to use
-			$set = 'set_'.$key;
-
-			$this->$set($value);
-		}
+		if (isset($settings['class']))       $this->set_class($settings['class']);
+		if (isset($settings['path']))        $this->set_path($settings['path']);
+		if (isset($settings['constructor'])) $this->set_constructor($settings['constructor']);
+		if (isset($settings['arguments']))   $this->set_arguments((array) $settings['arguments']);
+		if (isset($settings['shared']))      $this->set_shared($settings['shared']);
+		if (isset($settings['methods']))     $this->set_methods((array) $settings['methods']);
 
 		return $this;
 	}
@@ -125,9 +119,10 @@ class Kohana_Dependency_Definition {
 		$this->_methods = array();
 		foreach ($methods as $method)
 		{
-			$method_name = Arr::get($method, 0);
-			$arguments   = Arr::get($method, 1, array());
-			$this->add_method($method_name, $arguments);
+			if (isset($method[0]))
+			{
+				$this->add_method($method[0], $method[1] ?? array());
+			}
 		}
 
 		return $this;
@@ -160,13 +155,35 @@ class Kohana_Dependency_Definition {
 	public function merge_with(Dependency_Definition $right)
 	{
 		$left = clone $this;
-		
-		foreach (\get_object_vars($this) as $key => $value)
+
+		if ( ! empty($right->_class))
 		{
-			if ( ! empty($right->$key))
-			{
-				$left->$key = $right->$key;
-			}
+			$left->_class = $right->_class;
+		}
+
+		if ( ! empty($right->_path))
+		{
+			$left->_path = $right->_path;
+		}
+
+		if ( ! empty($right->_constructor))
+		{
+			$left->_constructor = $right->_constructor;
+		}
+
+		if ( ! empty($right->_arguments))
+		{
+			$left->_arguments = $right->_arguments;
+		}
+
+		if ( ! empty($right->_shared))
+		{
+			$left->_shared = $right->_shared;
+		}
+
+		if ( ! empty($right->_methods))
+		{
+			$left->_methods = $right->_methods;
 		}
 
 		return $left;
@@ -209,13 +226,16 @@ class Kohana_Dependency_Definition {
 		return $properties;
 	}
 
-	protected function _handle_reference($argument)
-	{
-		if ( ! empty($argument) AND \is_string($argument) AND \in_array($argument[0], array('%', '@')))
-		{
-			$argument = Dependency_Reference::factory($argument);
-		}
+    protected function _handle_reference($argument)
+    {
+        if (empty($argument)) {
+            return $argument;
+        }
 
-		return $argument;
-	}
+        if (\is_string($argument) && ($argument[0] === '%' || $argument[0] === '@')) {
+            $argument = Dependency_Reference::factory($argument);
+        }
+
+        return $argument;
+    }
 }

@@ -6,17 +6,42 @@ abstract class Kohana_Dependency_Reference {
 
 	public static function factory($argument)
 	{
-		if (\preg_match('/^\%'.self::KEY_FORMAT.'\%$/D', $argument))
+		if ( ! \is_string($argument) || \strlen($argument) < 3)
 		{
-			$argument = new Dependency_Reference_Container(\trim($argument, '%'));
+			return $argument;
 		}
-		elseif (\preg_match('/^\@'.self::KEY_FORMAT.'\@$/D', $argument))
+
+		// 1. Container Reference: %service.name%
+		if ($argument[0] === '%' && $argument[-1] === '%')
 		{
-			$argument = new Dependency_Reference_Config(\trim($argument, '@'), FALSE);
+			if (\preg_match('/^\%'.self::KEY_FORMAT.'\%$/D', $argument))
+			{
+				return new Dependency_Reference_Container(\substr($argument, 1, -1));
+			}
+
+			return $argument;
 		}
-		elseif (\preg_match('/^\@!'.self::KEY_FORMAT.'\!@$/D', $argument))
+
+		// 2. Required Config Reference: @!config.key!@
+		if (\str_starts_with($argument, '@!') && \str_ends_with($argument, '!@'))
 		{
-			$argument = new Dependency_Reference_Config(\trim($argument, '@!'), TRUE);
+			if (\preg_match('/^\@!'.self::KEY_FORMAT.'\!@$/D', $argument))
+			{
+				return new Dependency_Reference_Config(\substr($argument, 2, -2), TRUE);
+			}
+
+			return $argument;
+		}
+
+		// 3. Optional Config Reference: @config.key@
+		if ($argument[0] === '@' && $argument[-1] === '@')
+		{
+			if (\preg_match('/^\@'.self::KEY_FORMAT.'\@$/D', $argument))
+			{
+				return new Dependency_Reference_Config(\substr($argument, 1, -1), FALSE);
+			}
+
+			return $argument;
 		}
 
 		return $argument;

@@ -14,8 +14,10 @@ class Kohana_Dependency_Container {
 	public function get($key)
 	{
 		// Get an instance from the cache if it's there
-		if ($instance = $this->_cache($key))
-			return $instance;
+		if (isset($this->_cache[$key]))
+		{
+			return $this->_cache[$key];
+		}
 
 		// Get the dependency definition from the definition list
 		$definition = $this->_definitions->get($key);
@@ -26,7 +28,7 @@ class Kohana_Dependency_Container {
 		// Cache the instance if it is shared
 		if ($definition->is_shared())
 		{
-			$this->_cache($key, $instance);
+			$this->_cache[$key] = $instance;
 		}
 
 		return $instance;
@@ -56,32 +58,41 @@ class Kohana_Dependency_Container {
 			include_once $definition->getPath();
 		}
 
-		// Reflect the class and prepare the arguments
-		$class     = new ReflectionClass($definition->getClass());
+		$className = $definition->getClass();
 		$arguments = \array_map(array($this, '_resolve_argument'), $definition->getArguments());
 
 		try
 		{
+			if ( ! \class_exists($className))
+			{
+                throw Dependency_Exception::classDoesNotExist($className);
+			}
+
 			// Get an instance of the class
 			if (empty($definition->getConstructor()))
 			{
-				$instance = $class->newInstanceArgs($arguments);
+				$instance = new $className(...$arguments);
 			}
 			else
 			{
-				$instance = $class->getMethod($definition->getConstructor())->invokeArgs(NULL, $arguments);
+				$constructor = $definition->getConstructor();
+				$instance    = $className::$constructor(...$arguments);
 			}
 
 			// Run any additional methods required to prepare the object
 			foreach ($definition->getMethods() as $method => $args)
 			{
 				$args = \array_map(array($this, '_resolve_argument'), $args);
-				\call_user_func_array(array($instance, $method), $args);
+				$instance->$method(...$args);
 			}
 		}
 		catch (ReflectionException $e)
 		{
 		    throw Dependency_Exception::dependencyInstantiationException($definition->getClass(), $e);
+		}
+		catch (\Error $e)
+		{
+		    throw Dependency_Exception::dependencyInstantiationException($definition->getClass(), new ReflectionException($e->getMessage(), 0, $e));
 		}
 
 		return $instance;

@@ -11,6 +11,13 @@ class Kohana_Dependency_Exception extends Kohana_Exception
             $e
         );
     }
+    public static function classDoesNotExist($class)
+    {
+        return new static(
+            '"Class :class does not exist"',
+            [':class' => $class],
+        );
+    }
 
     public static function emptyFilePath()
     {

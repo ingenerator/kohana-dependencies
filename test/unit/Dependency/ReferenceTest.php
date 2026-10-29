@@ -8,9 +8,24 @@ use PHPUnit\Framework\TestCase;
 
 class ReferenceTest extends TestCase
 {
-    public function test_its_factory_returns_raw_arg_if_unexpected_format()
+    /**
+     * @testWith ["anything-atall"]
+     *           ["%incomplete"]
+     *           ["incomplete%"]
+     *           ["@incomplete"]
+     *           ["incomplete@"]
+     *           ["@!incomplete@"]
+     *           ["@incomplete!@"]
+     *           ["%"]
+     *           ["@"]
+     *           [""]
+     *           [123]
+     *           [null]
+     *           [false]
+     */
+    public function test_its_factory_returns_raw_arg_if_unexpected_format($raw)
     {
-        $this->assertSame('anything-atall', \Dependency_Reference::factory('anything-atall'));
+        $this->assertSame($raw, \Dependency_Reference::factory($raw));
     }
 
     public function test_it_factories_service_reference_which_resolves_to_expected_service()
