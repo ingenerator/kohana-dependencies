@@ -226,13 +226,16 @@ class Kohana_Dependency_Definition {
 		return $properties;
 	}
 
-	protected function _handle_reference($argument)
-	{
-		if ( ! empty($argument) && \is_string($argument) && ($argument[0] === '%' || $argument[0] === '@'))
-		{
-			$argument = Dependency_Reference::factory($argument);
-		}
+    protected function _handle_reference($argument)
+    {
+        if (empty($argument)) {
+            return $argument;
+        }
 
-		return $argument;
-	}
+        if (\is_string($argument) && ($argument[0] === '%' || $argument[0] === '@')) {
+            $argument = Dependency_Reference::factory($argument);
+        }
+
+        return $argument;
+    }
 }
