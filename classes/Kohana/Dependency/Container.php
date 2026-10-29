@@ -65,7 +65,7 @@ class Kohana_Dependency_Container {
 		{
 			if ( ! \class_exists($className))
 			{
-				throw new ReflectionException("Class \"$className\" does not exist");
+                throw Dependency_Exception::classDoesNotExist($className);
 			}
 
 			// Get an instance of the class
