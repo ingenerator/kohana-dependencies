@@ -9,7 +9,7 @@
 		{
 			"name":     "Andrew Coulton",
 			"email":    "andrew@ingenerator.com",
-			"homepage": "http://www.ingenerator.com",
+			"homepage": "https://www.ingenerator.com",
 			"role":     "developer"
 		},
 		{
@@ -30,7 +30,6 @@
 		"source":   "https://github.com/ingenerator/kohana-dependencies"
 	},
 	"require": {
-		"composer/installers":     "^1.12 || ^2.0",
 		"php":                     "~8.4.0 || ~8.5.0 || ~8.6.0",
 		"ingenerator/kohana-core": "^4.7"
 	},
@@ -62,7 +61,6 @@
 	},
 	"config": {
 		"allow-plugins": {
-			"composer/installers": true,
 			"cweagans/composer-patches": true
 		}
 	}
