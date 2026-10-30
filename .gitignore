@@ -1,5 +1,5 @@
 /composer.lock
-/koharness_bootstrap.php
+/patches.lock.json
 /vendor
 /.idea
 .phpunit.result.cache
